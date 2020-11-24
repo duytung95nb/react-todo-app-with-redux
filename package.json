@@ -14,7 +14,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "webpack --progress & node server.js",
     "build": "webpack --progress",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
