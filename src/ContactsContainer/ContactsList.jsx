@@ -6,8 +6,6 @@ import store from '../_Store/_storeConfig';
 class ContactsList extends React.Component {
     constructor(props) {
         super(props);
-    }
-    componentDidMount() { 
         store.dispatch(loadContactsAsync());
     }
     render() {
