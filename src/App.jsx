@@ -1,7 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
-import { Todo } from './ToDoContainer/Todo';
+import Todo from './ToDoContainer/Todo';
 import './App.scss';
+import ContactsList from './ContactsContainer/ContactsList';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <Todo />
+        <ContactsList />
         <a
           className="App-link"
           href="https://reactjs.org"

@@ -1,0 +1,6 @@
+{
+    "rules": {
+        // Because we use immer library
+        "no-unused-vars": 0
+    }
+}
