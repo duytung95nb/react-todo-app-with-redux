@@ -3,6 +3,7 @@ const app = express();
 const http = require('http');
 const contactRouter = require('./contact');
 http.Server(app);
+app.use(express.json());
 app.use('/api', contactRouter);
 const port = 4000;
 console.log(`App is listening at port ${port}`)

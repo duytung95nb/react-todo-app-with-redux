@@ -8,11 +8,17 @@ const contactSlice = createSlice({
         contacts: [],
         loading: true,
         error: null,
-        addingContactFailed: null
+        addingContactInProgress: false,
+        addingContactFailed: null,
+        addingContact: {
+            name: '',
+            age: ''
+        },
+        deletingContact: null
     },
     reducers: {
-        loadingData: (state, isLoading) => {
-            state.loading = isLoading
+        loadingData: (state, isLoadingAction) => {
+            state.loading = isLoadingAction.payload
         },
         loadSuccess: (state, contactsAction) => {
             state.contacts = contactsAction.payload
@@ -20,11 +26,27 @@ const contactSlice = createSlice({
         loadFailed: (state, contactsAction) => {
             state.error = contactsAction.payload
         },
-        addContact: (state, addedContact) => {
-            state.contacts.push(addedContact)
+        toggleAddingContactInProgress: (state, addingContactAction) => {
+            state.addingContactInProgress = addingContactAction.payload
         },
-        addContactFailed: (state, addingContact) => {
-            state.addingContactFailed = addingContact;
+        toggleDeletingContact: (state, deletingContactAction) => {
+            state.deletingContact = deletingContactAction.payload
+        },
+        changeAddingContact: (state, addingContactAction) => {
+            state.addingContact = addingContactAction.payload
+        },
+        addContact: (state, addedContactAction) => {
+            state.addingContact = {name: '', age: ''};
+            state.contacts.push(addedContactAction.payload);
+        },
+        deleteContact: (state, deletedContactAction) => {
+            state.contacts = state.contacts.filter(c => c.id !== deletedContactAction.payload.id);
+        },
+        deleteContactFailed: (state, deletedContactFailedAction) => {
+            state.error = deletedContactFailedAction.payload
+        },
+        addContactFailed: (state, addingContactAction) => {
+            state.addingContactFailed = addingContactAction.payload;
         }
     }
 });
@@ -32,8 +54,9 @@ const contactSlice = createSlice({
 export function loadContactsAsync(){
     return dispatch => {
         dispatch(contactSlice.actions.loadingData(true));
-        fetch(`${_appConstant.contactOrigin}/api/contacts`, {
-            method: 'GET'
+        return fetch(`${_appConstant.contactOrigin}/api/contacts`, {
+            method: 'GET',
+            cache: 'default'
         }).then(response => {
             if(response.status == 200) {
                 response.json().then(jsonResult => {
@@ -51,12 +74,15 @@ export function loadContactsAsync(){
     }
 }
 export function addContactAsync(contact) {
-    
     return dispatch => {
-        dispatch(contactSlice.actions.loadingData(true));
+        dispatch(contactSlice.actions.toggleAddingContactInProgress(true));
         fetch(`${_appConstant.contactOrigin}/api/contacts`, {
             method: 'POST',
-            body: contact
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(contact)
         }).then(response => {
             if(response.status == 201) {
                 response.json().then(createdContact => {
@@ -68,10 +94,33 @@ export function addContactAsync(contact) {
             }
         })
         .catch(error => {
-            dispatch(contactSlice.actions.addContact(error));
+            dispatch(contactSlice.actions.addContactFailed(error));
         })
         .finally(() => {
-            dispatch(contactSlice.actions.loadingData(false));
+            dispatch(contactSlice.actions.toggleAddingContactInProgress(false));
+        });
+    }
+}
+export function deleteContactAsync(contact) {
+    return dispatch => {
+        dispatch(contactSlice.actions.toggleDeletingContact(contact));
+        fetch(`${_appConstant.contactOrigin}/api/contacts/${contact.id}`, {
+            method: 'DELETE'
+        }).then(response => {
+            if(response.status == 200) {
+                response.json().then(deletedContact => {
+                    dispatch(contactSlice.actions.deleteContact(deletedContact));
+                });
+            }
+            else {
+                throw new Error(`Error status ${response.status}`)
+            }
+        })
+        .catch(error => {
+            dispatch(contactSlice.actions.deleteContactFailed(error));
+        })
+        .finally(() => {
+            dispatch(contactSlice.actions.toggleDeletingContact(null));
         });
     }
 }

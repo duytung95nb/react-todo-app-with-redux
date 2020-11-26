@@ -1,0 +1,22 @@
+@keyframes newlyAddedElement {
+  0% {
+    opacity:0;
+    height: 0px;
+    transform:  scaleY(0) translateY(-100%);
+  }
+  100% {
+    opacity:1;
+    height: 35px;
+    transform:  scaleY(1) translateY(0%);
+  }
+}
+.ContactsList {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.List {
+    &__Item {
+        animation: newlyAddedElement 1s;
+        animation-iteration-count: 1;
+    }
+}
