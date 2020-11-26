@@ -1,6 +1,5 @@
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = function (env) {
   const my_env = (typeof env == 'object' && ["development", "production"].includes(env.NODE_ENV)) ? env.NODE_ENV : 'none';
   console.log('env.NODE_ENV: ' + my_env);
@@ -36,7 +35,6 @@ module.exports = function (env) {
           test: /\.s[ac]ss$/i,
           exclude: /node_modules/,
           use: [
-            // MiniCssExtractPlugin.loader,
             // Creates `style` nodes from JS strings
             { loader: 'style-loader', options: { injectType: 'styleTag' } },
             // Translates CSS into CommonJS
