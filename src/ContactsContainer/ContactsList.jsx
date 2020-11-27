@@ -6,7 +6,8 @@ import './ContactsList.scss';
 class ContactsList extends React.Component {
     constructor(props) {
         super(props);
-        console.log('ContactsList constructor')
+    }
+    componentDidMount() {
         store.dispatch(loadContactsAsync());
     }
     contactNameChanged = (event) => {
