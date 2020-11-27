@@ -54,9 +54,8 @@ const contactSlice = createSlice({
 export function loadContactsAsync(){
     return dispatch => {
         dispatch(contactSlice.actions.loadingData(true));
-        return fetch(`${_appConstant.contactOrigin}/api/contacts`, {
-            method: 'GET',
-            cache: 'default'
+        return fetch(`${_appConstant.apiOrigin}/api/contacts`, {
+            method: 'GET'
         }).then(response => {
             if(response.status == 200) {
                 response.json().then(jsonResult => {
@@ -76,7 +75,7 @@ export function loadContactsAsync(){
 export function addContactAsync(contact) {
     return dispatch => {
         dispatch(contactSlice.actions.toggleAddingContactInProgress(true));
-        fetch(`${_appConstant.contactOrigin}/api/contacts`, {
+        fetch(`${_appConstant.apiOrigin}/api/contacts`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -104,7 +103,7 @@ export function addContactAsync(contact) {
 export function deleteContactAsync(contact) {
     return dispatch => {
         dispatch(contactSlice.actions.toggleDeletingContact(contact));
-        fetch(`${_appConstant.contactOrigin}/api/contacts/${contact.id}`, {
+        fetch(`${_appConstant.apiOrigin}/api/contacts/${contact.id}`, {
             method: 'DELETE'
         }).then(response => {
             if(response.status == 200) {

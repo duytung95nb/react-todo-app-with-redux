@@ -1,3 +1,3 @@
 export default {
-    contactOrigin: 'http://localhost:4000'
+    apiOrigin: 'http://localhost:4000'
 }
