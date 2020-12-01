@@ -1,6 +1,7 @@
 import React from 'react';
+import './Loading.scss';
 
-function Loading() {
-    return <div>Loading</div>
+function Loading({ loading }) {
+    return <div className={'Loading ' + (loading ? "": "Loading--Hidden")}>Loading</div>
 }
 export default Loading;

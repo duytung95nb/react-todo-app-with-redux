@@ -33,22 +33,24 @@ class ContactsList extends React.Component {
             <input className="ContactsList__InputName" type="text"
                 value={this.props.addingContact.name}
                 onChange={this.contactNameChanged}/>
-            <input className="ContactsList__InputAge"
+            <input className="ContactsList__InputAge form-control"
                 type="number" value={this.props.addingContact.age}
                 onChange={this.contactAgeChanged}/>
-            <button onClick={this.addContact}>Add contact {this.props.loading? "Loading": ""}</button>
-            <ul className="List">
+            <button className="btn btn-primary" onClick={this.addContact}>Add contact {this.props.loading? "Loading": ""}</button>
+            <ul className="list-group align-middle List">
                 {this.props.contacts.map(c =>
-                    <li className={`List__Item ${
+                    <li className={`list-group-item List__Item ${
                         c.id == this.props.deletingContact?.id ? "List__Item--Deleting": ""}`}
                         key={c.id}>{c.name}
-                        <button onClick={this.onDeleteItemClicked.bind(this, c)}>Delete</button></li>)}
+                        <button className="btn btn-danger float-right"
+                        onClick={this.onDeleteItemClicked.bind(this, c)}>Delete</button></li>)}
             </ul>
         </div>
     }
 }
 
 function mapStateToProps(state) {
+    console.log('mapStateToProps contact list runs');
     return { ...state[contactSlice.name] }
 }
 export default connect(mapStateToProps)(ContactsList);

@@ -1,7 +1,8 @@
 
 .Todo {
+    min-height: 500px;
     &__AddItem {
-
+        display: flex;
     }
     &__AddItemInput {
         &--Error {

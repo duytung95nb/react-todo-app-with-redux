@@ -1,0 +1,10 @@
+.Loading {
+    transition: height 1s ease;
+    -moz-transition: height 1s ease;
+    -webkit-transition: height 1s ease;
+    -o-transition: height 1s ease;
+    height: 50px;
+    &--Hidden {
+        height: 0;
+    }
+}

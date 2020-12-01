@@ -9,7 +9,8 @@ const todoSlice = createSlice({
         loading: true,
         todoList: null,
         error: null,
-        addingTask: false
+        addingTask: false,
+        deletingTask: false
     },
     reducers: {
         loadingData: (state, isLoadingAction) => {
@@ -30,6 +31,16 @@ const todoSlice = createSlice({
         },
         addTaskFailed: (state, errorAction) => {
             state.todoList.todos.push(errorAction.payload)
+        },
+        deleteTask: (state, deletedTaskAction) => {
+            state.todoList.todos = state.todoList.todos
+                .filter(t => t.id != deletedTaskAction.payload.id)
+        },
+        deletingTask: (state, deletingTaskAction) => {
+            state.deletingTask = deletingTaskAction.payload
+        },
+        deleteTaskFailed: (state, deletedTaskFailedAction) => {
+            state.deletingTask = deletedTaskFailedAction.payload
         },
     }
 });
@@ -57,6 +68,17 @@ export function addTodoAsync(todoItem) {
             .catch(err => dispatch(todoSlice.actions.addTaskFailed(err)))
             .finally(() => {
                 dispatch(todoSlice.actions.addingTask(false))
+            });
+    }
+}
+export function deleteTodoAsync(itemId) {
+    return dispatch => {
+        dispatch(todoSlice.actions.deletingTask(true));
+        return apiService.delete(`${_appConstant.apiOrigin}/api/tasks/${itemId}`)
+            .then(deletedTask => dispatch(todoSlice.actions.deleteTask(deletedTask)))
+            .catch(err => dispatch(todoSlice.actions.deleteTaskFailed(err)))
+            .finally(() => {
+                dispatch(todoSlice.actions.deletingTask(false))
             });
     }
 }

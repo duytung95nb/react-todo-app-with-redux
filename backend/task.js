@@ -9,11 +9,12 @@ taskRouter.use((req, res, next) => {
     }, 500)
 });
 taskRouter.get('/', (req, res) => {
+    const resultTasks = tasks.filter(task => task.status !== 'Deleted');
     res.status(200).json({
         assignee: {
             name: 'Tung Dao'
         },
-        todos: tasks
+        todos: resultTasks
     });
 });
 taskRouter.get('/:id', (req, res) => {
@@ -36,7 +37,7 @@ taskRouter.post('/', (req, res) => {
 taskRouter.delete('/:id', (req, res) => {
     console.log('req param id', req.params.id);
     const deletingTask = tasks.find(c => c.id == req.params.id);
-    tasks = tasks.filter(c => c.id != req.params.id);
+    deletingTask.status = 'Deleted';
     res.status(200).json(deletingTask);
 });
 module.exports = taskRouter;

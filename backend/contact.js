@@ -2,22 +2,34 @@ const express = require('express');
 const contactRouter = express.Router();
 let contacts = [{
     id: 1,
-    name: 'Tung Dao 1'
+    name: 'Tung Dao 1',
+    image: 'https://lh3.google.com/u/0/ogw/ADGmqu8LwpshQFzdZc6MmDuysKiMED2ImNJBXqK4cWfA=s83-c-mo',
+    superior: null,
 }, {
     id: 2,
-    name: 'Tung Dao 2'
+    name: 'Tung Dao 2',
+    image: 'https://lh3.google.com/u/0/ogw/ADGmqu8LwpshQFzdZc6MmDuysKiMED2ImNJBXqK4cWfA=s83-c-mo',
+    superior: 1
 }, {
     id: 3,
-    name: 'Tung Dao 3'
+    name: 'Tung Dao 3',
+    image: 'https://lh3.google.com/u/0/ogw/ADGmqu8LwpshQFzdZc6MmDuysKiMED2ImNJBXqK4cWfA=s83-c-mo',
+    superior: 1
 }, {
     id: 4,
-    name: 'Tung Dao 4'
+    name: 'Tung Dao 4',
+    image: 'https://lh3.google.com/u/0/ogw/ADGmqu8LwpshQFzdZc6MmDuysKiMED2ImNJBXqK4cWfA=s83-c-mo',
+    superior: 2
 }, {
     id: 5,
-    name: 'Tung Dao 5'
+    name: 'Tung Dao 5',
+    image: 'https://lh3.google.com/u/0/ogw/ADGmqu8LwpshQFzdZc6MmDuysKiMED2ImNJBXqK4cWfA=s83-c-mo',
+    superior: 2
 }, {
     id: 6,
-    name: 'Tung Dao 6'
+    name: 'Tung Dao 6',
+    image: 'https://lh3.google.com/u/0/ogw/ADGmqu8LwpshQFzdZc6MmDuysKiMED2ImNJBXqK4cWfA=s83-c-mo',
+    superior: 3
 }, ];
 let latestId = 6;
 contactRouter.use((req, res, next) => {

@@ -2,11 +2,10 @@
   0% {
     opacity:0;
     height: 0px;
-    transform:  scaleY(0) translateY(-100%);
+    transform: scaleY(0) translateY(-100%);
   }
   100% {
     opacity:1;
-    height: 35px;
     transform:  scaleY(1) translateY(0%);
   }
 }
@@ -15,8 +14,12 @@
     overflow-y: auto;
 }
 .List {
+    animation: newlyAddedElement 1s;
+    animation-iteration-count: 1;
     &__Item {
-        animation: newlyAddedElement 1s;
-        animation-iteration-count: 1;
+        height: 60px;
+        &--NewlyAdded {
+          transition: height 2s ease-out;
+        }
     }
 }
